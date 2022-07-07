@@ -17,3 +17,9 @@ lint:
 swag-gen:
 	echo ${REGISTRY}
 	swag init -g api/routers.go -o api/docs
+
+pull-proto-module:
+	git submodule update --init --recursive
+
+update-proto-module:
+	git submodule update --remote --rebase
