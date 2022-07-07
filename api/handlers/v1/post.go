@@ -109,7 +109,7 @@ func (h *HandlerV1) GetPostByID(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "ID"
 // @Param update_post body models.PostRequest true "update_post"
-// @Success 200 {object} models.Post
+// @Success 200 {object} models.SuccessfullResponse
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
 // @Router /v1/posts/update-post/{id}/ [put]
@@ -137,7 +137,7 @@ func (h *HandlerV1) UpdatePost(c *gin.Context) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
-	response, err := h.serviceManager.PostService().UpdatePost(ctx, &pbPost.Post{
+	_, err = h.serviceManager.PostService().UpdatePost(ctx, &pbPost.Post{
 		Id:     int64(postID),
 		UserId: body.UserID,
 		Title:  body.Title,
@@ -150,7 +150,7 @@ func (h *HandlerV1) UpdatePost(c *gin.Context) {
 		h.log.Error("failed to update post", l.Error(err))
 		return
 	}
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusOK, models.SuccessfullResponse{Message: "Post updated successfully"})
 }
 
 // DeletePost ...
