@@ -23,3 +23,6 @@ pull-proto-module:
 
 update-proto-module:
 	git submodule update --remote --rebase
+
+make create-env:
+	cp ./.env.example ./.env
