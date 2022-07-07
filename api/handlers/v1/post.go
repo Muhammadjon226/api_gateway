@@ -19,14 +19,14 @@ import (
 // @Tags post
 // @Accept  json
 // @Produce  json
-// @Param create_post_request body models.Post true "create_post_request"
+// @Param create_post_request body models.PostRequest true "create_post_request"
 // @Success 200 {object} models.Post
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
 // @Router /v1/posts/create-post/ [post]
-func (h *handlerV1) CreatePost(c *gin.Context) {
+func (h *HandlerV1) CreatePost(c *gin.Context) {
 	var (
-		body models.Post
+		body models.PostRequest
 	)
 	err := c.ShouldBindJSON(&body)
 	if err != nil {
@@ -36,11 +36,20 @@ func (h *handlerV1) CreatePost(c *gin.Context) {
 		h.log.Error("failed to bind json", l.Error(err))
 		return
 	}
+	idStr := utils.GenerateCode(4)
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to generate id for post", l.Error(err))
+		return
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 	response, err := h.serviceManager.PostService().CreatePost(ctx, &pbPost.Post{
-		Id:     body.Id,
-		UserId: body.UserId,
+		Id:     int64(id),
+		UserId: body.UserID,
 		Title:  body.Title,
 		Body:   body.Body,
 	})
@@ -54,8 +63,8 @@ func (h *handlerV1) CreatePost(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// GetPostById ...
-// @Summary GetPostById
+// GetPostByID ...
+// @Summary GetPostByID
 // @Description This API for getting post by id
 // @Tags post
 // @Accept  json
@@ -65,9 +74,9 @@ func (h *handlerV1) CreatePost(c *gin.Context) {
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
 // @Router /v1/posts/get-post/{id}/ [get]
-func (h *handlerV1) GetPostById(c *gin.Context) {
+func (h *HandlerV1) GetPostByID(c *gin.Context) {
 	id := c.Param("id")
-	postId, err := strconv.Atoi(id)
+	postID, err := strconv.Atoi(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -78,8 +87,8 @@ func (h *handlerV1) GetPostById(c *gin.Context) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
-	response, err := h.serviceManager.PostService().GetPostById(ctx, &pbPost.ByIdReq{
-		Id: int64(postId),
+	response, err := h.serviceManager.PostService().GetPostByID(ctx, &pbPost.ByIdReq{
+		Id: int64(postID),
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -99,17 +108,17 @@ func (h *handlerV1) GetPostById(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ID"
-// @Param update_post body models.UpdatePost true "update_post"
+// @Param update_post body models.PostRequest true "update_post"
 // @Success 200 {object} models.Post
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
 // @Router /v1/posts/update-post/{id}/ [put]
-func (h *handlerV1) UpdatePost(c *gin.Context) {
+func (h *HandlerV1) UpdatePost(c *gin.Context) {
 	var (
-		body models.UpdatePost
+		body models.PostRequest
 	)
 	id := c.Param("id")
-	postId, err := strconv.Atoi(id)
+	postID, err := strconv.Atoi(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -128,9 +137,9 @@ func (h *handlerV1) UpdatePost(c *gin.Context) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
-	response, err := h.serviceManager.PostService().CreatePost(ctx, &pbPost.Post{
-		Id:     int64(postId),
-		UserId: body.UserId,
+	response, err := h.serviceManager.PostService().UpdatePost(ctx, &pbPost.Post{
+		Id:     int64(postID),
+		UserId: body.UserID,
 		Title:  body.Title,
 		Body:   body.Body,
 	})
@@ -155,9 +164,9 @@ func (h *handlerV1) UpdatePost(c *gin.Context) {
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
 // @Router /v1/posts/delete-post/{id}/ [delete]
-func (h *handlerV1) DeletePost(c *gin.Context) {
+func (h *HandlerV1) DeletePost(c *gin.Context) {
 	id := c.Param("id")
-	postId, err := strconv.Atoi(id)
+	postID, err := strconv.Atoi(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -169,7 +178,7 @@ func (h *handlerV1) DeletePost(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 	_, err = h.serviceManager.PostService().DeletePost(ctx, &pbPost.ByIdReq{
-		Id: int64(postId),
+		Id: int64(postID),
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -196,7 +205,7 @@ func (h *handlerV1) DeletePost(c *gin.Context) {
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
 // @Router /v1/posts/list-posts/ [get]
-func (h *handlerV1) ListPosts(c *gin.Context) {
+func (h *HandlerV1) ListPosts(c *gin.Context) {
 	queryParams := c.Request.URL.Query()
 	params, errStr := utils.ParseQueryParams(queryParams)
 	if errStr != nil {

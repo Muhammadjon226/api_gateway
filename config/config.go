@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cast"
 )
 
+//Config ...
 type Config struct {
 	Environment     string // develop, staging, production
 	LogLevel        string

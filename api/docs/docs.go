@@ -16,41 +16,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/get-from-open-api/": {
-            "get": {
-                "description": "This API for getting list of posts from open apu",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "open_api_posts"
-                ],
-                "summary": "GetPostsFromApi",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.SuccessfullResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.StandardErrorModel"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/models.StandardErrorModel"
-                        }
-                    }
-                }
-            }
-        },
         "/v1/posts/create-post/": {
             "post": {
                 "description": "This API for creating a new post",
@@ -71,7 +36,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Post"
+                            "$ref": "#/definitions/models.PostRequest"
                         }
                     }
                 ],
@@ -141,6 +106,41 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/posts/get-from-open-api/": {
+            "get": {
+                "description": "This API for getting list of posts from open api",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "open_api_posts"
+                ],
+                "summary": "GetPostsFromOpenAPI",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SuccessfullResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/posts/get-post/{id}/": {
             "get": {
                 "description": "This API for getting post by id",
@@ -153,7 +153,7 @@ const docTemplate = `{
                 "tags": [
                     "post"
                 ],
-                "summary": "GetPostById",
+                "summary": "GetPostByID",
                 "parameters": [
                     {
                         "type": "integer",
@@ -261,7 +261,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.UpdatePost"
+                            "$ref": "#/definitions/models.PostRequest"
                         }
                     }
                 ],
@@ -317,8 +317,28 @@ const docTemplate = `{
                 "body": {
                     "type": "string"
                 },
+                "created_at": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.PostRequest": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
                 },
                 "title": {
                     "type": "string"
@@ -341,20 +361,6 @@ const docTemplate = `{
             "properties": {
                 "message": {
                     "type": "string"
-                }
-            }
-        },
-        "models.UpdatePost": {
-            "type": "object",
-            "properties": {
-                "body": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "integer"
                 }
             }
         }

@@ -11,22 +11,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetPostsFromApi ...
-// @Summary GetPostsFromApi
-// @Description This API for getting list of posts from open apu
+// GetPostsFromAPI ...
+// @Summary GetPostsFromOpenAPI
+// @Description This API for getting list of posts from open api
 // @Tags open_api_posts
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} models.SuccessfullResponse
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/get-from-open-api/ [get]
-func (h *handlerV1) GetPostsFromApi(c *gin.Context) {
+// @Router /v1/posts/get-from-open-api/ [get]
+func (h *HandlerV1) GetPostsFromAPI(c *gin.Context) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
-	_, err := h.serviceManager.FirstService().GetPostsFromOpenApi(ctx, &pbFirst.EmptyResp{})
+	_, err := h.serviceManager.FirstService().GetPostsFromOpenAPI(ctx, &pbFirst.EmptyResp{})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),

@@ -33,19 +33,20 @@ type Logger interface {
 	Fatal(msg string, fields ...Field)
 }
 
-type LoggerImpl struct {
+//loggerImpl ...
+type loggerImpl struct {
 	zap *zap.Logger
 }
 
 var customTimeFormat string
 
 // New ...
-func New(level, namespace string) *LoggerImpl {
+func New(level, namespace string) Logger {
 	if level == "" {
 		level = LevelInfo
 	}
 
-	logger := LoggerImpl{
+	logger := loggerImpl{
 		zap: newZapLogger(level, time.RFC3339),
 	}
 
@@ -56,30 +57,30 @@ func New(level, namespace string) *LoggerImpl {
 	return &logger
 }
 
-func (l *LoggerImpl) Debug(msg string, fields ...Field) {
+func (l *loggerImpl) Debug(msg string, fields ...Field) {
 	l.zap.Debug(msg, fields...)
 }
 
-func (l *LoggerImpl) Info(msg string, fields ...Field) {
+func (l *loggerImpl) Info(msg string, fields ...Field) {
 	l.zap.Info(msg, fields...)
 }
 
-func (l *LoggerImpl) Warn(msg string, fields ...Field) {
+func (l *loggerImpl) Warn(msg string, fields ...Field) {
 	l.zap.Warn(msg, fields...)
 }
 
-func (l *LoggerImpl) Error(msg string, fields ...Field) {
+func (l *loggerImpl) Error(msg string, fields ...Field) {
 	l.zap.Error(msg, fields...)
 }
 
-func (l *LoggerImpl) Fatal(msg string, fields ...Field) {
+func (l *loggerImpl) Fatal(msg string, fields ...Field) {
 	l.zap.Fatal(msg, fields...)
 }
 
 // GetNamed ...
 func GetNamed(l Logger, name string) Logger {
 	switch v := l.(type) {
-	case *LoggerImpl:
+	case *loggerImpl:
 		v.zap = v.zap.Named(name)
 		return v
 	default:
@@ -91,8 +92,8 @@ func GetNamed(l Logger, name string) Logger {
 // WithFields ...
 func WithFields(l Logger, fields ...Field) Logger {
 	switch v := l.(type) {
-	case *LoggerImpl:
-		return &LoggerImpl{
+	case *loggerImpl:
+		return &loggerImpl{
 			zap: v.zap.With(fields...),
 		}
 	default:
@@ -104,7 +105,7 @@ func WithFields(l Logger, fields ...Field) Logger {
 // Cleanup ...
 func Cleanup(l Logger) error {
 	switch v := l.(type) {
-	case *LoggerImpl:
+	case *loggerImpl:
 		return v.zap.Sync()
 	default:
 		l.Info("logger.Cleanup: invalid logger type")

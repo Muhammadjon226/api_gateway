@@ -68,7 +68,7 @@ func GetZapLogger(l Logger) *zap.Logger {
 	}
 
 	switch v := l.(type) {
-	case *LoggerImpl:
+	case *loggerImpl:
 		return v.zap
 	default:
 		l.Info("logger.WithFields: invalid logger type, creating a new zap logger", String("level", LevelInfo), String("time_format", time.RFC3339))

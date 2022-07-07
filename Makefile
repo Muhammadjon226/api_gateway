@@ -1,5 +1,6 @@
 .PHONY: build
 
+PKG_LIST := $(shell go list ./... | grep -v /vendor/)
 CURRENT_DIR=$(shell pwd)
 APP=template
 APP_CMD_DIR=./cmd
@@ -10,9 +11,8 @@ build:
 proto-gen:
 	./scripts/gen-proto.sh	${CURRENT_DIR}
 
-lint: ## Run golangci-lint with printing to stdout
-	golangci-lint -c .golangci.yaml run --build-tags "musl" ./...
-
+lint:
+	golint -set_exit_status ${PKG_LIST}
 
 swag-gen:
 	echo ${REGISTRY}

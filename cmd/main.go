@@ -16,7 +16,7 @@ func main() {
 		log.Error("gRPC dial error", logger.Error(err))
 	}
 
-	server := api.New(api.Option{
+	server := api.New(api.Config{
 		Conf:           cfg,
 		Logger:         log,
 		ServiceManager: serviceManager,

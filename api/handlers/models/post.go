@@ -2,21 +2,23 @@ package models
 
 // Post ...
 type Post struct {
-	Id     int64  `json:"id"`
-	UserId int64  `json:"user_id"`
+	ID     int64  `json:"id"`
+	UserID int64  `json:"user_id"`
+	Title  string `json:"title"`
+	Body   string `json:"body"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAT string `json:"updated_at"`
+}
+
+ // PostRequest ...
+type PostRequest struct {
+	UserID int64  `json:"user_id"`
 	Title  string `json:"title"`
 	Body   string `json:"body"`
 }
-
 // SuccessfullResponse ...
 type SuccessfullResponse struct {
 	Message string `json:"message"`
-}
-
-type UpdatePost struct {
-	UserId int64  `json:"user_id"`
-	Title  string `json:"title"`
-	Body   string `json:"body"`
 }
 
 // ListPosts ...

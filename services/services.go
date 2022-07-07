@@ -12,11 +12,13 @@ import (
 	pbFirst "github.com/Muhammadjon226/api_gateway/genproto/first_service"
 )
 
+//IServiceManager ...
 type IServiceManager interface {
 	PostService() pbPost.PostServiceClient
 	FirstService() pbFirst.FirstServiceClient
 }
 
+//serviceManager ...
 type serviceManager struct {
 	postService pbPost.PostServiceClient
 	firstService pbFirst.FirstServiceClient
@@ -29,6 +31,7 @@ func (s *serviceManager) FirstService() pbFirst.FirstServiceClient {
 	return s.firstService
 }
 
+//NewServiceManager ...
 func NewServiceManager(conf *config.Config) (IServiceManager, error) {
 	resolver.SetDefaultScheme("dns")
 

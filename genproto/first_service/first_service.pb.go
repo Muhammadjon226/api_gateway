@@ -136,6 +136,93 @@ func (m *Post) GetBody() string {
 	return ""
 }
 
+type PostResponse struct {
+	Id                   int64    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+	UserId               int64    `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	Title                string   `protobuf:"bytes,3,opt,name=title,proto3" json:"title"`
+	Body                 string   `protobuf:"bytes,4,opt,name=body,proto3" json:"body"`
+	CreatedAt            string   `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at"`
+	UpdatedAt            string   `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PostResponse) Reset()         { *m = PostResponse{} }
+func (m *PostResponse) String() string { return proto.CompactTextString(m) }
+func (*PostResponse) ProtoMessage()    {}
+func (*PostResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_797839e1137a2d6a, []int{2}
+}
+func (m *PostResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PostResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PostResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PostResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PostResponse.Merge(m, src)
+}
+func (m *PostResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *PostResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PostResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PostResponse proto.InternalMessageInfo
+
+func (m *PostResponse) GetId() int64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *PostResponse) GetUserId() int64 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+func (m *PostResponse) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *PostResponse) GetBody() string {
+	if m != nil {
+		return m.Body
+	}
+	return ""
+}
+
+func (m *PostResponse) GetCreatedAt() string {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return ""
+}
+
+func (m *PostResponse) GetUpdatedAt() string {
+	if m != nil {
+		return m.UpdatedAt
+	}
+	return ""
+}
+
 type ByIdReq struct {
 	Id                   int64    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -147,7 +234,7 @@ func (m *ByIdReq) Reset()         { *m = ByIdReq{} }
 func (m *ByIdReq) String() string { return proto.CompactTextString(m) }
 func (*ByIdReq) ProtoMessage()    {}
 func (*ByIdReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_797839e1137a2d6a, []int{2}
+	return fileDescriptor_797839e1137a2d6a, []int{3}
 }
 func (m *ByIdReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -195,7 +282,7 @@ func (m *ListReq) Reset()         { *m = ListReq{} }
 func (m *ListReq) String() string { return proto.CompactTextString(m) }
 func (*ListReq) ProtoMessage()    {}
 func (*ListReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_797839e1137a2d6a, []int{3}
+	return fileDescriptor_797839e1137a2d6a, []int{4}
 }
 func (m *ListReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -239,18 +326,18 @@ func (m *ListReq) GetLimit() int64 {
 }
 
 type ListResp struct {
-	Posts                []*Post  `protobuf:"bytes,1,rep,name=Posts,proto3" json:"Posts"`
-	Count                int64    `protobuf:"varint,2,opt,name=count,proto3" json:"count"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Posts                []*PostResponse `protobuf:"bytes,1,rep,name=Posts,proto3" json:"Posts"`
+	Count                int64           `protobuf:"varint,2,opt,name=count,proto3" json:"count"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *ListResp) Reset()         { *m = ListResp{} }
 func (m *ListResp) String() string { return proto.CompactTextString(m) }
 func (*ListResp) ProtoMessage()    {}
 func (*ListResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_797839e1137a2d6a, []int{4}
+	return fileDescriptor_797839e1137a2d6a, []int{5}
 }
 func (m *ListResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -279,7 +366,7 @@ func (m *ListResp) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListResp proto.InternalMessageInfo
 
-func (m *ListResp) GetPosts() []*Post {
+func (m *ListResp) GetPosts() []*PostResponse {
 	if m != nil {
 		return m.Posts
 	}
@@ -296,6 +383,7 @@ func (m *ListResp) GetCount() int64 {
 func init() {
 	proto.RegisterType((*EmptyResp)(nil), "first_service.EmptyResp")
 	proto.RegisterType((*Post)(nil), "first_service.Post")
+	proto.RegisterType((*PostResponse)(nil), "first_service.PostResponse")
 	proto.RegisterType((*ByIdReq)(nil), "first_service.ByIdReq")
 	proto.RegisterType((*ListReq)(nil), "first_service.ListReq")
 	proto.RegisterType((*ListResp)(nil), "first_service.ListResp")
@@ -304,30 +392,33 @@ func init() {
 func init() { proto.RegisterFile("first_service/first_service.proto", fileDescriptor_797839e1137a2d6a) }
 
 var fileDescriptor_797839e1137a2d6a = []byte{
-	// 357 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x52, 0x41, 0x4b, 0x02, 0x41,
-	0x14, 0x6e, 0xdd, 0x55, 0xf3, 0x59, 0x11, 0xcf, 0xc8, 0xcd, 0xc3, 0x62, 0x7b, 0xb2, 0x8b, 0x81,
-	0x42, 0x87, 0x88, 0x20, 0x2b, 0x43, 0x0a, 0x8a, 0x8d, 0x0e, 0x9d, 0x44, 0x9d, 0x57, 0x0c, 0xa8,
-	0x3b, 0xed, 0x8c, 0x81, 0xe7, 0xfe, 0x44, 0x3f, 0xa9, 0x63, 0x3f, 0x21, 0xec, 0x8f, 0xc4, 0xcc,
-	0x2e, 0x82, 0xcb, 0x7a, 0xe8, 0xf6, 0xbe, 0xef, 0xcd, 0xf7, 0xcd, 0xf7, 0x1e, 0x0f, 0x0e, 0x5f,
-	0x78, 0x24, 0x55, 0x5f, 0x52, 0xf4, 0xce, 0x47, 0x74, 0xbc, 0x82, 0x9a, 0x22, 0x0a, 0x55, 0x88,
-	0xdb, 0x2b, 0xa4, 0x5f, 0x86, 0xd2, 0xf5, 0x44, 0xa8, 0x79, 0x40, 0x52, 0xf8, 0xcf, 0xe0, 0x3c,
-	0x84, 0x52, 0xe1, 0x0e, 0xe4, 0x38, 0x73, 0xad, 0xba, 0xd5, 0xb0, 0x83, 0x1c, 0x67, 0x58, 0x85,
-	0xe2, 0x4c, 0x52, 0xd4, 0xe7, 0xcc, 0xcd, 0x19, 0xb2, 0xa0, 0x61, 0x8f, 0xe1, 0x1e, 0xe4, 0x15,
-	0x57, 0x63, 0x72, 0xed, 0xba, 0xd5, 0x28, 0x05, 0x31, 0x40, 0x04, 0x67, 0x18, 0xb2, 0xb9, 0xeb,
-	0x18, 0xd2, 0xd4, 0xfe, 0x01, 0x14, 0x3b, 0xf3, 0x1e, 0x0b, 0xe8, 0x2d, 0xed, 0xee, 0xb7, 0xa1,
-	0x78, 0xc7, 0xa5, 0xd2, 0x2d, 0x04, 0x47, 0x0c, 0x5e, 0x29, 0x69, 0x9a, 0x5a, 0xff, 0x31, 0xe6,
-	0x13, 0xae, 0x92, 0xaf, 0x63, 0xe0, 0xdf, 0xc2, 0x66, 0x2c, 0x92, 0x02, 0x8f, 0x20, 0xaf, 0x63,
-	0x4b, 0xd7, 0xaa, 0xdb, 0x8d, 0x72, 0xab, 0xd2, 0x5c, 0x9d, 0x5b, 0xf7, 0x82, 0xf8, 0x85, 0x36,
-	0x1b, 0x85, 0xb3, 0xe9, 0xd2, 0xcc, 0x80, 0xd6, 0x87, 0x0d, 0x5b, 0x5d, 0xad, 0x79, 0x8c, 0x25,
-	0x78, 0x02, 0x70, 0x19, 0xd1, 0x40, 0x91, 0x59, 0x47, 0x96, 0x61, 0x2d, 0x8b, 0xc4, 0x53, 0x28,
-	0xdf, 0x90, 0xd2, 0xa5, 0x1e, 0x16, 0xf7, 0x53, 0x6f, 0x92, 0x0d, 0x64, 0x6b, 0xcf, 0xa0, 0xa4,
-	0x27, 0x8a, 0x73, 0xa6, 0x95, 0xc9, 0x82, 0x6a, 0xd5, 0x4c, 0x5e, 0x0a, 0x9d, 0xf8, 0x49, 0xb0,
-	0xff, 0x27, 0x3e, 0x07, 0xb8, 0xa2, 0x31, 0x25, 0xba, 0x75, 0x81, 0xdd, 0x14, 0xbf, 0x3c, 0x19,
-	0xec, 0x41, 0x25, 0x99, 0x58, 0x76, 0xa3, 0x70, 0x72, 0x2f, 0x68, 0x7a, 0x21, 0x38, 0xae, 0x15,
-	0xac, 0xb7, 0xea, 0xec, 0x7e, 0x2d, 0x3c, 0xeb, 0x7b, 0xe1, 0x59, 0x3f, 0x0b, 0xcf, 0xfa, 0xfc,
-	0xf5, 0x36, 0x86, 0x05, 0x73, 0xb2, 0xed, 0xbf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x28, 0xfa, 0x21,
-	0x29, 0xd7, 0x02, 0x00, 0x00,
+	// 410 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x53, 0x5d, 0x6b, 0x1a, 0x41,
+	0x14, 0xed, 0xb8, 0x7e, 0x74, 0xaf, 0xb6, 0x94, 0xb1, 0xd4, 0xad, 0xa5, 0x8b, 0xdd, 0x27, 0x9f,
+	0x2c, 0xd5, 0xd7, 0x22, 0xb8, 0xb5, 0x86, 0x85, 0x40, 0x64, 0x25, 0x0f, 0x79, 0x12, 0x75, 0x26,
+	0x61, 0x40, 0xdd, 0x71, 0x67, 0x0c, 0xec, 0x3f, 0x09, 0xe4, 0x21, 0x7f, 0x27, 0x8f, 0xf9, 0x09,
+	0xc1, 0xfc, 0x91, 0x30, 0xb3, 0x13, 0x89, 0x8b, 0xfa, 0x10, 0xc8, 0xdb, 0xdc, 0x73, 0xe7, 0x9c,
+	0x7b, 0xce, 0x9d, 0x5d, 0xf8, 0x75, 0xc9, 0x62, 0x21, 0xc7, 0x82, 0xc6, 0xd7, 0x6c, 0x46, 0x7f,
+	0xef, 0x54, 0x2d, 0x1e, 0x47, 0x32, 0xc2, 0x9f, 0x76, 0x40, 0xaf, 0x0c, 0xf6, 0xff, 0x05, 0x97,
+	0x49, 0x48, 0x05, 0xf7, 0x2e, 0x20, 0x3f, 0x8c, 0x84, 0xc4, 0x9f, 0x21, 0xc7, 0x88, 0x83, 0x1a,
+	0xa8, 0x69, 0x85, 0x39, 0x46, 0x70, 0x0d, 0x4a, 0x6b, 0x41, 0xe3, 0x31, 0x23, 0x4e, 0x4e, 0x83,
+	0x45, 0x55, 0x06, 0x04, 0x7f, 0x85, 0x82, 0x64, 0x72, 0x4e, 0x1d, 0xab, 0x81, 0x9a, 0x76, 0x98,
+	0x16, 0x18, 0x43, 0x7e, 0x1a, 0x91, 0xc4, 0xc9, 0x6b, 0x50, 0x9f, 0xbd, 0x3b, 0x04, 0x15, 0xa5,
+	0xad, 0xe6, 0x44, 0x4b, 0x41, 0xdf, 0x61, 0x06, 0xfe, 0x09, 0x30, 0x8b, 0xe9, 0x44, 0x52, 0x32,
+	0x9e, 0x48, 0xa7, 0xa0, 0x3b, 0xb6, 0x41, 0x7a, 0x52, 0xb5, 0xd7, 0x9c, 0xbc, 0xb4, 0x8b, 0x69,
+	0xdb, 0x20, 0x3d, 0xe9, 0x7d, 0x87, 0x92, 0x9f, 0x04, 0x24, 0xa4, 0xab, 0xac, 0x37, 0xaf, 0x03,
+	0xa5, 0x53, 0xa6, 0xbc, 0xaf, 0xd4, 0x5c, 0x3e, 0xb9, 0xa2, 0xa6, 0xa9, 0xcf, 0xca, 0xe1, 0x9c,
+	0x2d, 0x98, 0x34, 0xc6, 0xd3, 0xc2, 0x1b, 0xc1, 0xc7, 0x94, 0x24, 0x38, 0xfe, 0x03, 0x05, 0x15,
+	0x5e, 0x38, 0xa8, 0x61, 0x35, 0xcb, 0xed, 0x1f, 0xad, 0xdd, 0x97, 0x79, 0xbd, 0x98, 0x30, 0xbd,
+	0xa9, 0x44, 0x67, 0xd1, 0x7a, 0xb9, 0x15, 0xd5, 0x45, 0xfb, 0xd6, 0x82, 0xca, 0x40, 0x71, 0x47,
+	0x29, 0x15, 0x77, 0x01, 0xfe, 0xe9, 0x84, 0xfa, 0xe1, 0xaa, 0x7b, 0x84, 0xeb, 0xc7, 0xa6, 0x61,
+	0x1f, 0xca, 0x27, 0x54, 0x2a, 0xc8, 0x4f, 0x82, 0x3e, 0xfe, 0x96, 0xb9, 0x6b, 0x36, 0x72, 0x5c,
+	0xe3, 0x2f, 0xd8, 0x2a, 0x69, 0xea, 0x3b, 0xab, 0x60, 0x16, 0x57, 0xaf, 0xed, 0xc5, 0x05, 0x57,
+	0x09, 0xce, 0xf5, 0x23, 0xbc, 0x31, 0x41, 0x17, 0xa0, 0x4f, 0xe7, 0xd4, 0xf0, 0x0f, 0x05, 0x70,
+	0x32, 0xf8, 0xf6, 0xa3, 0xc7, 0x01, 0x54, 0xcd, 0x06, 0xc4, 0x20, 0x8e, 0x16, 0x67, 0x9c, 0x2e,
+	0x7b, 0xc3, 0x00, 0x1f, 0x24, 0x1c, 0x96, 0xf2, 0xbf, 0xdc, 0x6f, 0x5c, 0xf4, 0xb0, 0x71, 0xd1,
+	0xe3, 0xc6, 0x45, 0x37, 0x4f, 0xee, 0x87, 0x69, 0x51, 0xff, 0x74, 0x9d, 0xe7, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0xf9, 0xe0, 0x87, 0x5c, 0x99, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -342,12 +433,12 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type FirstServiceClient interface {
-	CreatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*Post, error)
-	GetPostById(ctx context.Context, in *ByIdReq, opts ...grpc.CallOption) (*Post, error)
+	CreatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*PostResponse, error)
+	GetPostByID(ctx context.Context, in *ByIdReq, opts ...grpc.CallOption) (*PostResponse, error)
 	ListPosts(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
-	UpdatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*Post, error)
+	UpdatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*PostResponse, error)
 	DeletePost(ctx context.Context, in *ByIdReq, opts ...grpc.CallOption) (*EmptyResp, error)
-	GetPostsFromOpenApi(ctx context.Context, in *EmptyResp, opts ...grpc.CallOption) (*EmptyResp, error)
+	GetPostsFromOpenAPI(ctx context.Context, in *EmptyResp, opts ...grpc.CallOption) (*EmptyResp, error)
 }
 
 type firstServiceClient struct {
@@ -358,8 +449,8 @@ func NewFirstServiceClient(cc *grpc.ClientConn) FirstServiceClient {
 	return &firstServiceClient{cc}
 }
 
-func (c *firstServiceClient) CreatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*Post, error) {
-	out := new(Post)
+func (c *firstServiceClient) CreatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*PostResponse, error) {
+	out := new(PostResponse)
 	err := c.cc.Invoke(ctx, "/first_service.FirstService/CreatePost", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -367,9 +458,9 @@ func (c *firstServiceClient) CreatePost(ctx context.Context, in *Post, opts ...g
 	return out, nil
 }
 
-func (c *firstServiceClient) GetPostById(ctx context.Context, in *ByIdReq, opts ...grpc.CallOption) (*Post, error) {
-	out := new(Post)
-	err := c.cc.Invoke(ctx, "/first_service.FirstService/GetPostById", in, out, opts...)
+func (c *firstServiceClient) GetPostByID(ctx context.Context, in *ByIdReq, opts ...grpc.CallOption) (*PostResponse, error) {
+	out := new(PostResponse)
+	err := c.cc.Invoke(ctx, "/first_service.FirstService/GetPostByID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -385,8 +476,8 @@ func (c *firstServiceClient) ListPosts(ctx context.Context, in *ListReq, opts ..
 	return out, nil
 }
 
-func (c *firstServiceClient) UpdatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*Post, error) {
-	out := new(Post)
+func (c *firstServiceClient) UpdatePost(ctx context.Context, in *Post, opts ...grpc.CallOption) (*PostResponse, error) {
+	out := new(PostResponse)
 	err := c.cc.Invoke(ctx, "/first_service.FirstService/UpdatePost", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -403,9 +494,9 @@ func (c *firstServiceClient) DeletePost(ctx context.Context, in *ByIdReq, opts .
 	return out, nil
 }
 
-func (c *firstServiceClient) GetPostsFromOpenApi(ctx context.Context, in *EmptyResp, opts ...grpc.CallOption) (*EmptyResp, error) {
+func (c *firstServiceClient) GetPostsFromOpenAPI(ctx context.Context, in *EmptyResp, opts ...grpc.CallOption) (*EmptyResp, error) {
 	out := new(EmptyResp)
-	err := c.cc.Invoke(ctx, "/first_service.FirstService/GetPostsFromOpenApi", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/first_service.FirstService/GetPostsFromOpenAPI", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -414,35 +505,35 @@ func (c *firstServiceClient) GetPostsFromOpenApi(ctx context.Context, in *EmptyR
 
 // FirstServiceServer is the server API for FirstService service.
 type FirstServiceServer interface {
-	CreatePost(context.Context, *Post) (*Post, error)
-	GetPostById(context.Context, *ByIdReq) (*Post, error)
+	CreatePost(context.Context, *Post) (*PostResponse, error)
+	GetPostByID(context.Context, *ByIdReq) (*PostResponse, error)
 	ListPosts(context.Context, *ListReq) (*ListResp, error)
-	UpdatePost(context.Context, *Post) (*Post, error)
+	UpdatePost(context.Context, *Post) (*PostResponse, error)
 	DeletePost(context.Context, *ByIdReq) (*EmptyResp, error)
-	GetPostsFromOpenApi(context.Context, *EmptyResp) (*EmptyResp, error)
+	GetPostsFromOpenAPI(context.Context, *EmptyResp) (*EmptyResp, error)
 }
 
 // UnimplementedFirstServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedFirstServiceServer struct {
 }
 
-func (*UnimplementedFirstServiceServer) CreatePost(ctx context.Context, req *Post) (*Post, error) {
+func (*UnimplementedFirstServiceServer) CreatePost(ctx context.Context, req *Post) (*PostResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePost not implemented")
 }
-func (*UnimplementedFirstServiceServer) GetPostById(ctx context.Context, req *ByIdReq) (*Post, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPostById not implemented")
+func (*UnimplementedFirstServiceServer) GetPostByID(ctx context.Context, req *ByIdReq) (*PostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPostByID not implemented")
 }
 func (*UnimplementedFirstServiceServer) ListPosts(ctx context.Context, req *ListReq) (*ListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPosts not implemented")
 }
-func (*UnimplementedFirstServiceServer) UpdatePost(ctx context.Context, req *Post) (*Post, error) {
+func (*UnimplementedFirstServiceServer) UpdatePost(ctx context.Context, req *Post) (*PostResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePost not implemented")
 }
 func (*UnimplementedFirstServiceServer) DeletePost(ctx context.Context, req *ByIdReq) (*EmptyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePost not implemented")
 }
-func (*UnimplementedFirstServiceServer) GetPostsFromOpenApi(ctx context.Context, req *EmptyResp) (*EmptyResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPostsFromOpenApi not implemented")
+func (*UnimplementedFirstServiceServer) GetPostsFromOpenAPI(ctx context.Context, req *EmptyResp) (*EmptyResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPostsFromOpenAPI not implemented")
 }
 
 func RegisterFirstServiceServer(s *grpc.Server, srv FirstServiceServer) {
@@ -467,20 +558,20 @@ func _FirstService_CreatePost_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FirstService_GetPostById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _FirstService_GetPostByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ByIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FirstServiceServer).GetPostById(ctx, in)
+		return srv.(FirstServiceServer).GetPostByID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/first_service.FirstService/GetPostById",
+		FullMethod: "/first_service.FirstService/GetPostByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FirstServiceServer).GetPostById(ctx, req.(*ByIdReq))
+		return srv.(FirstServiceServer).GetPostByID(ctx, req.(*ByIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -539,20 +630,20 @@ func _FirstService_DeletePost_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FirstService_GetPostsFromOpenApi_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _FirstService_GetPostsFromOpenAPI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyResp)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FirstServiceServer).GetPostsFromOpenApi(ctx, in)
+		return srv.(FirstServiceServer).GetPostsFromOpenAPI(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/first_service.FirstService/GetPostsFromOpenApi",
+		FullMethod: "/first_service.FirstService/GetPostsFromOpenAPI",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FirstServiceServer).GetPostsFromOpenApi(ctx, req.(*EmptyResp))
+		return srv.(FirstServiceServer).GetPostsFromOpenAPI(ctx, req.(*EmptyResp))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -566,8 +657,8 @@ var _FirstService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _FirstService_CreatePost_Handler,
 		},
 		{
-			MethodName: "GetPostById",
-			Handler:    _FirstService_GetPostById_Handler,
+			MethodName: "GetPostByID",
+			Handler:    _FirstService_GetPostByID_Handler,
 		},
 		{
 			MethodName: "ListPosts",
@@ -582,8 +673,8 @@ var _FirstService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _FirstService_DeletePost_Handler,
 		},
 		{
-			MethodName: "GetPostsFromOpenApi",
-			Handler:    _FirstService_GetPostsFromOpenApi_Handler,
+			MethodName: "GetPostsFromOpenAPI",
+			Handler:    _FirstService_GetPostsFromOpenAPI_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -640,6 +731,71 @@ func (m *Post) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Body) > 0 {
+		i -= len(m.Body)
+		copy(dAtA[i:], m.Body)
+		i = encodeVarintFirstService(dAtA, i, uint64(len(m.Body)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Title) > 0 {
+		i -= len(m.Title)
+		copy(dAtA[i:], m.Title)
+		i = encodeVarintFirstService(dAtA, i, uint64(len(m.Title)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.UserId != 0 {
+		i = encodeVarintFirstService(dAtA, i, uint64(m.UserId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Id != 0 {
+		i = encodeVarintFirstService(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PostResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PostResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PostResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.UpdatedAt) > 0 {
+		i -= len(m.UpdatedAt)
+		copy(dAtA[i:], m.UpdatedAt)
+		i = encodeVarintFirstService(dAtA, i, uint64(len(m.UpdatedAt)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.CreatedAt) > 0 {
+		i -= len(m.CreatedAt)
+		copy(dAtA[i:], m.CreatedAt)
+		i = encodeVarintFirstService(dAtA, i, uint64(len(m.CreatedAt)))
+		i--
+		dAtA[i] = 0x2a
 	}
 	if len(m.Body) > 0 {
 		i -= len(m.Body)
@@ -823,6 +979,40 @@ func (m *Post) Size() (n int) {
 		n += 1 + l + sovFirstService(uint64(l))
 	}
 	l = len(m.Body)
+	if l > 0 {
+		n += 1 + l + sovFirstService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PostResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovFirstService(uint64(m.Id))
+	}
+	if m.UserId != 0 {
+		n += 1 + sovFirstService(uint64(m.UserId))
+	}
+	l = len(m.Title)
+	if l > 0 {
+		n += 1 + l + sovFirstService(uint64(l))
+	}
+	l = len(m.Body)
+	if l > 0 {
+		n += 1 + l + sovFirstService(uint64(l))
+	}
+	l = len(m.CreatedAt)
+	if l > 0 {
+		n += 1 + l + sovFirstService(uint64(l))
+	}
+	l = len(m.UpdatedAt)
 	if l > 0 {
 		n += 1 + l + sovFirstService(uint64(l))
 	}
@@ -1096,6 +1286,223 @@ func (m *Post) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *PostResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowFirstService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PostResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PostResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFirstService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserId", wireType)
+			}
+			m.UserId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFirstService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.UserId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFirstService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Title = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Body", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFirstService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Body = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFirstService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreatedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowFirstService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UpdatedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipFirstService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthFirstService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *ByIdReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1313,7 +1720,7 @@ func (m *ListResp) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Posts = append(m.Posts, &Post{})
+			m.Posts = append(m.Posts, &PostResponse{})
 			if err := m.Posts[len(m.Posts)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
